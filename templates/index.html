@@ -1,0 +1,824 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Vault | File Upload Portal</title>
+
+    <style>
+        :root {
+            --bg: #080f1c;
+            --surface: #111c2e;
+            --surface-light: #17263a;
+            --border: #24344c;
+            --primary: #2563eb;
+            --primary-light: #60a5fa;
+            --text: #e5eaf3;
+            --muted: #8292a9;
+            --success: #22c55e;
+            --danger: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+
+        nav {
+            height: 76px;
+            padding: 0 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #111c2e;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .brand-icon {
+            width: 43px;
+            height: 43px;
+            display: grid;
+            place-items: center;
+            background: #142b4a;
+            border: 1px solid #24558a;
+            border-radius: 12px;
+            font-size: 22px;
+        }
+
+        .brand h2 {
+            color: #fff;
+            font-size: 19px;
+            letter-spacing: 1px;
+        }
+
+        .brand small {
+            display: block;
+            color: var(--muted);
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            margin-top: 3px;
+        }
+
+        nav .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        nav a {
+            color: #a8b6ca;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--primary-light);
+        }
+
+        nav .nav-button {
+            background: var(--primary);
+            color: white;
+            padding: 10px 17px;
+            border-radius: 7px;
+        }
+
+        nav .nav-button:hover {
+            background: #1d4ed8;
+            color: white;
+        }
+
+        /* Main Container */
+
+        .container {
+            max-width: 1180px;
+            margin: 45px auto;
+            padding: 0 25px;
+        }
+
+        /* Welcome Section */
+
+        .hero {
+            margin-bottom: 30px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: rgba(37, 99, 235, 0.12);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: #93c5fd;
+            padding: 7px 13px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.3px;
+            margin-bottom: 17px;
+        }
+
+        .hero h1 {
+            font-size: clamp(28px, 4vw, 38px);
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .hero h1 span {
+            color: var(--primary-light);
+        }
+
+        .hero p {
+            max-width: 680px;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        /* Main Content Layout */
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 0.9fr;
+            gap: 22px;
+            align-items: start;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            padding: 27px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h2 {
+            color: #fff;
+            font-size: 19px;
+            margin-bottom: 9px;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        /* Upload Section */
+
+        .upload-icon {
+            width: 55px;
+            height: 55px;
+            display: grid;
+            place-items: center;
+            background: #142b4a;
+            border: 1px solid #24558a;
+            border-radius: 13px;
+            font-size: 25px;
+            margin-bottom: 19px;
+        }
+
+        .file-input {
+            width: 100%;
+            display: block;
+            padding: 20px;
+            background: #0b1525;
+            border: 2px dashed #3b506d;
+            border-radius: 9px;
+            color: var(--text);
+            margin-bottom: 19px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .file-input:hover {
+            border-color: var(--primary-light);
+            background: #101f34;
+        }
+
+        .file-input::file-selector-button {
+            background: #1d3555;
+            color: #93c5fd;
+            border: 1px solid #355477;
+            padding: 9px 13px;
+            border-radius: 6px;
+            margin-right: 12px;
+            cursor: pointer;
+        }
+
+        .upload-btn {
+            width: 100%;
+            padding: 13px;
+            background: var(--primary);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .upload-btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        /* Messages */
+
+        .message {
+            margin-top: 18px;
+            padding: 13px;
+            border-radius: 8px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .success {
+            background: rgba(34, 197, 94, 0.12);
+            border: 1px solid rgba(34, 197, 94, 0.35);
+            color: #86efac;
+        }
+
+        .error {
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            color: #fca5a5;
+        }
+
+        /* Security Information */
+
+        .security-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            padding: 25px;
+        }
+
+        .security-heading {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .security-heading span {
+            font-size: 24px;
+        }
+
+        .security-heading h2 {
+            font-size: 17px;
+            color: #fff;
+        }
+
+        .security-heading p {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        .security-item {
+            display: flex;
+            gap: 11px;
+            align-items: flex-start;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .security-item:last-child {
+            border-bottom: none;
+        }
+
+        .check {
+            color: #60a5fa;
+            font-size: 15px;
+        }
+
+        .security-item p {
+            color: #cbd5e1;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        /* Upload History */
+
+        .history {
+            margin-top: 25px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            padding: 27px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 22px;
+        }
+
+        .history h2 {
+            color: #fff;
+            font-size: 19px;
+        }
+
+        .history-header p {
+            color: var(--muted);
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .history-label {
+            background: #192b43;
+            color: #93c5fd;
+            border: 1px solid #2b4668;
+            border-radius: 6px;
+            padding: 7px 11px;
+            font-size: 11px;
+        }
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            min-width: 580px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 15px 13px;
+            border-bottom: 1px solid var(--border);
+            font-size: 12px;
+        }
+
+        th {
+            background: #192b43;
+            color: #93c5fd;
+            font-weight: 600;
+        }
+
+        td {
+            color: #cbd5e1;
+        }
+
+        tbody tr:hover {
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .download {
+            color: #60a5fa;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .download:hover {
+            color: white;
+        }
+
+        .empty {
+            text-align: center;
+            color: var(--muted);
+            padding: 25px;
+        }
+
+        /* Footer */
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 22px;
+            text-align: center;
+            color: #64748b;
+            font-size: 12px;
+            margin-top: 45px;
+        }
+
+        /* Responsive Design */
+
+        @media (max-width: 850px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                height: auto;
+                padding: 15px 18px;
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            nav .nav-links {
+                width: 100%;
+                gap: 18px;
+                flex-wrap: wrap;
+            }
+
+            .container {
+                margin: 30px auto;
+                padding: 0 15px;
+            }
+
+            .card, .security-card, .history {
+                padding: 20px 16px;
+            }
+
+            .history-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .hero h1 {
+                font-size: 29px;
+            }
+        }
+        
+/* ==================================
+   SECURE VAULT - EMERALD DARK THEME
+================================== */
+
+:root {
+    --bg: #080909;
+    --surface: #161817;
+    --surface-light: #202522;
+    --border: #292d2b;
+    --primary: #50d0a0;
+    --primary-light: #75e3b8;
+    --text: #f1f3f2;
+    --muted: #a0a6a2;
+    --success: #50d0a0;
+    --danger: #ef7777;
+}
+
+/* Main background */
+
+body {
+    background: #080909;
+    color: #f1f3f2;
+}
+
+/* Navigation */
+
+nav {
+    background: #080911;
+    border-bottom: 1px solid #24252d;
+}
+
+.brand-icon {
+    background: #101b1b;
+    border: 1px solid #243b36;
+    box-shadow: 0 0 25px rgba(80, 208, 160, 0.12);
+}
+
+nav a {
+    color: #b9bfbb;
+}
+
+nav a:hover {
+    color: #50d0a0;
+}
+
+nav .nav-button {
+    background: #50d0a0;
+    color: #07130e;
+    box-shadow: 0 0 22px rgba(80, 208, 160, 0.22);
+}
+
+nav .nav-button:hover {
+    background: #75e3b8;
+    color: #07130e;
+}
+
+/* Welcome section */
+
+.hero h1 span {
+    color: #50d0a0;
+}
+
+.tag {
+    background: #151a18;
+    border: 1px solid #303a35;
+    color: #a9d9c4;
+}
+
+/* Cards */
+
+.card,
+.security-card,
+.history {
+    background: #161817;
+    border: 1px solid #292e2b;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+}
+
+.card h2,
+.security-heading h2,
+.history h2 {
+    color: #f1f3f2;
+}
+
+/* Upload card green glow */
+
+.card {
+    background:
+        radial-gradient(
+            circle at 100% 0%,
+            rgba(80, 208, 160, 0.10),
+            transparent 40%
+        ),
+        #161817;
+}
+
+.upload-icon {
+    background: #1c2923;
+    border: 1px solid #315c48;
+}
+
+/* File input */
+
+.file-input {
+    background: #101312;
+    border: 2px dashed #39443e;
+    color: #e5eae7;
+}
+
+.file-input:hover {
+    border-color: #50d0a0;
+    background: #151d19;
+}
+
+.file-input::file-selector-button {
+    background: #1c2923;
+    color: #75e3b8;
+    border: 1px solid #365b49;
+}
+
+/* Buttons */
+
+.upload-btn {
+    background: #50d0a0;
+    color: #07130e;
+    box-shadow: 0 5px 18px rgba(80, 208, 160, 0.12);
+}
+
+.upload-btn:hover {
+    background: #75e3b8;
+}
+
+/* Security panel */
+
+.security-heading span {
+    color: #50d0a0;
+}
+
+.check {
+    color: #50d0a0;
+}
+
+/* Table */
+
+th {
+    background: #202522;
+    color: #75e3b8;
+}
+
+td {
+    color: #c4cbc6;
+}
+
+tbody tr:hover {
+    background: rgba(80, 208, 160, 0.05);
+}
+
+.download {
+    color: #50d0a0;
+}
+
+.download:hover {
+    color: #a2f2d0;
+}
+
+/* Messages */
+
+.success {
+    background: rgba(80, 208, 160, 0.10);
+    border: 1px solid rgba(80, 208, 160, 0.30);
+    color: #75e3b8;
+}
+
+/* Footer */
+
+footer {
+    border-top: 1px solid #292d2b;
+    color: #777f79;
+}
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+
+    <nav>
+        <div class="brand">
+            <div class="brand-icon">🛡️</div>
+            <div>
+                <h2>SECURE VAULT</h2>
+                <small>FILE SECURITY MANAGEMENT</small>
+            </div>
+        </div>
+
+        <div class="nav-links">
+            {% if admin_logged_in %}
+                <a href="{{ url_for('admin') }}">Admin Dashboard</a>
+                <a href="{{ url_for('admin_logout') }}">Logout</a>
+            {% else %}
+                <a class="nav-button" href="{{ url_for('admin_login') }}">
+                    Admin Login
+                </a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+
+    <div class="container">
+
+        <!-- Welcome Section -->
+
+        <section class="hero">
+            <div class="tag">SECURE FILE MANAGEMENT</div>
+
+            <h1>Upload Files <span>Safely.</span></h1>
+
+            <p>
+                Welcome to Secure Vault. Upload your documents securely
+                with file validation and security inspection before storage.
+            </p>
+        </section>
+
+        <!-- Upload and Security Sections -->
+
+        <div class="content-grid">
+
+            <section class="card">
+
+                <div class="upload-icon">📁</div>
+
+                <h2>Upload Your File</h2>
+
+                <p class="subtitle">
+                    Select a PDF or image file to begin secure validation.
+                </p>
+
+                <form method="POST"
+                      action="{{ url_for('home') }}"
+                      enctype="multipart/form-data">
+
+                    <input
+                        class="file-input"
+                        type="file"
+                        name="file"
+                        accept=".pdf,.png,.jpg,.jpeg"
+                        required
+                    >
+
+                    <button class="upload-btn" type="submit">
+                        Upload and Scan File →
+                    </button>
+
+                </form>
+
+                {% if message %}
+                    <div class="message {% if success %}success{% else %}error{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endif %}
+
+            </section>
+
+            <!-- Security Rules -->
+
+            <aside class="security-card">
+
+                <div class="security-heading">
+                    <span>🔐</span>
+                    <div>
+                        <h2>Security Guidelines</h2>
+                        <p>File upload protection</p>
+                    </div>
+                </div>
+
+                <div class="security-item">
+                    <span class="check">✓</span>
+                    <p>Allowed formats: PDF, PNG, JPG and JPEG</p>
+                </div>
+
+                <div class="security-item">
+                    <span class="check">✓</span>
+                    <p>Maximum file size: 5 MB</p>
+                </div>
+
+                <div class="security-item">
+                    <span class="check">✓</span>
+                    <p>Files receive unique server-generated names</p>
+                </div>
+
+                <div class="security-item">
+                    <span class="check">✓</span>
+                    <p>Basic file validation and PDF active-content checks are performed</p>
+                </div>
+
+            </aside>
+
+        </div>
+
+        <!-- Upload History -->
+
+        {% if admin_logged_in %}
+        <section class="history">
+
+            <div class="history-header">
+                <div>
+                    <h2>Recent Upload History</h2>
+                    <p>Review files uploaded to the portal.</p>
+                </div>
+
+                <span class="history-label">ADMIN VIEW</span>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Filename</th>
+                            <th>File Type</th>
+                            <th>Size (Bytes)</th>
+                            <th>Download</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for file in history %}
+                        <tr>
+                            <td>{{ file[0] }}</td>
+                            <td>{{ file[1] }}</td>
+                            <td>{{ file[2] }}</td>
+                            <td>{{ file[3] }}</td>
+                            <td>
+                                <a class="download"
+                                   href="{{ url_for('download_file', file_id=file[0]) }}">
+                                    Download →
+                                </a>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="5" class="empty">
+                                No uploaded files found.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+        {% endif %}
+
+    </div>
+
+    <footer>
+        Secure File Upload Portal | BCA Cybersecurity Project
+        <br><br>
+        © 2026 Secure Vault. All rights reserved.
+    </footer>
+
+</body>
+</html>
