@@ -1,0 +1,365 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | Secure Vault</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #080f1c;
+            color: #e5eaf3;
+            padding: 20px;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 430px;
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .brand-icon {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #142b4a;
+            border: 1px solid #24558a;
+            border-radius: 18px;
+            font-size: 30px;
+        }
+
+        .brand h1 {
+            font-size: 25px;
+            letter-spacing: 2px;
+            color: #ffffff;
+        }
+
+        .brand p {
+            color: #8292a9;
+            font-size: 12px;
+            letter-spacing: 2px;
+            margin-top: 7px;
+        }
+
+        .login-card {
+            background: #111c2e;
+            border: 1px solid #24344c;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+        }
+
+        .login-card h2 {
+            font-size: 23px;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+
+        .description {
+            color: #8292a9;
+            font-size: 13px;
+            margin-bottom: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #cbd5e1;
+            margin-bottom: 9px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px 14px;
+            background: #0b1525;
+            border: 1px solid #30425c;
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 14px;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+        }
+
+        input::placeholder {
+            color: #64748b;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 5px;
+        }
+
+        .login-btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .message {
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            color: #fca5a5;
+            padding: 11px;
+            border-radius: 7px;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            color: #8fa3bd;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .back-link:hover {
+            color: #60a5fa;
+        }
+
+        .security-note {
+            text-align: center;
+            color: #64748b;
+            font-size: 11px;
+            margin-top: 25px;
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 25px 20px;
+            }
+
+            .brand h1 {
+                font-size: 22px;
+            }
+        }
+        
+/* =====================================
+   SECURE VAULT - ADMIN LOGIN THEME
+===================================== */
+
+:root {
+    --bg: #080909;
+    --surface: #161817;
+    --border: #292d2b;
+    --primary: #50d0a0;
+    --primary-light: #75e3b8;
+    --text: #f1f3f2;
+    --muted: #a0a6a2;
+}
+
+/* Page background */
+
+body {
+    background:
+        radial-gradient(
+            circle at 50% 15%,
+            rgba(80, 208, 160, 0.09),
+            transparent 38%
+        ),
+        #080909;
+    color: var(--text);
+}
+
+/* Brand icon */
+
+.brand-icon {
+    background: #1c2923;
+    border: 1px solid #315c48;
+    box-shadow: 0 0 30px rgba(80, 208, 160, 0.15);
+}
+
+/* Brand title */
+
+.brand h1 {
+    color: #ffffff;
+}
+
+.brand p {
+    color: #a0a6a2;
+}
+
+/* Login card */
+
+.login-card {
+    background: #161817;
+    border: 1px solid #303833;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.login-card h2 {
+    color: #ffffff;
+}
+
+.description {
+    color: #a0a6a2;
+}
+
+/* Form labels */
+
+label {
+    color: #cbd5ce;
+}
+
+/* Input fields */
+
+input {
+    background: #0d1210;
+    border: 1px solid #39443e;
+    color: #ffffff;
+}
+
+input:focus {
+    border-color: #50d0a0;
+    box-shadow: 0 0 0 3px rgba(80, 208, 160, 0.12);
+}
+
+input::placeholder {
+    color: #748078;
+}
+
+/* Login button */
+
+.login-btn {
+    background: #50d0a0;
+    color: #07130e;
+    box-shadow: 0 5px 20px rgba(80, 208, 160, 0.12);
+}
+
+.login-btn:hover {
+    background: #75e3b8;
+    color: #07130e;
+}
+
+/* Error message */
+
+.message {
+    background: rgba(239, 119, 119, 0.10);
+    border: 1px solid rgba(239, 119, 119, 0.30);
+    color: #fca5a5;
+}
+
+/* Home link */
+
+.back-link {
+    color: #a0a6a2;
+}
+
+.back-link:hover {
+    color: #75e3b8;
+}
+
+/* Security note */
+
+.security-note {
+    color: #777f79;
+}
+
+    </style>
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <div class="brand">
+            <div class="brand-icon">🛡️</div>
+            <h1>SECURE VAULT</h1>
+            <p>FILE SECURITY MANAGEMENT</p>
+        </div>
+
+        <div class="login-card">
+
+            <h2>Administrator Login</h2>
+            <p class="description">
+                Sign in to access the secure administration panel.
+            </p>
+
+            {% if message %}
+                <div class="message">{{ message }}</div>
+            {% endif %}
+
+            <form method="POST" action="{{ url_for('admin_login') }}">
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter your admin username"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="login-btn">
+                    Sign In to Dashboard →
+                </button>
+
+            </form>
+
+            <a href="{{ url_for('home') }}" class="back-link">
+                ← Back to Home
+            </a>
+
+        </div>
+
+        <p class="security-note">
+            🔒 Secure Administrator Access
+            <br><br>
+            © 2026 Secure Vault. All rights reserved.
+        </p>
+
+    </div>
+
+</body>
+</html>
